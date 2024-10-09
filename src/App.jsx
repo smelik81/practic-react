@@ -1,24 +1,57 @@
-import FriendList from "./components/FriendList/FriendList.jsx";
-import Profile from "./components/Profile/Profile.jsx";
-import userData from "./userData.json";
-import friends from "./friends.json";
-import transaction from "./transaction.json";
-import TransactionHistory from "./components/TransactionHistory/TransactionHistory.jsx";
+import { useEffect, useState } from "react";
+import Description from "./components/Description/Description.jsx";
+import FeedBack from "./components/FeedBack/FeedBack.jsx";
+import Option from "./components/Option/Option.jsx";
 
-function App() {
+const App = () => {
+  const feedBackState = {
+    good: 0,
+    neutral: 0,
+    bad: 0,
+  };
+
+  const [fdb, setFdb] = useState(() => {
+    const saveFeedBack = localStorage.getItem("feedback");
+    return saveFeedBack ? JSON.parse(saveFeedBack) : feedBackState;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("feedback", JSON.stringify(fdb));
+  }, [fdb]);
+
+  const updateFeedBack = (values) => {
+    setFdb((currentState) => ({
+      ...currentState,
+      [values]: currentState[values] + 1,
+    }));
+  };
+
+  const resetTotal = () => {
+    setFdb(feedBackState);
+  };
+
+  const totalFeedback = fdb.good + fdb.neutral + fdb.bad;
+  const totalPositive = totalFeedback
+    ? Math.round((fdb.good / totalFeedback) * 100)
+    : 0;
+
   return (
-    <>
-      <Profile
-        name={userData.username}
-        tag={userData.tag}
-        location={userData.location}
-        image={userData.avatar}
-        stats={userData.stats}
+    <div>
+      <Description />
+      <Option
+        updateFeedBack={updateFeedBack}
+        resetTotal={resetTotal}
+        total={totalFeedback}
       />
-      <FriendList friends={friends} />
-      <TransactionHistory transaction={transaction} />
-    </>
+      <FeedBack
+        good={fdb.good}
+        bad={fdb.bad}
+        neutral={fdb.neutral}
+        total={totalFeedback}
+        totalPositive={totalPositive}
+      />
+    </div>
   );
-}
+};
 
 export default App;
