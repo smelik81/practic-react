@@ -1,0 +1,52 @@
+.wrapper {
+  border: 2px solid black;
+  width: 500px;
+  padding: 15px;
+  background-color: #eedec936;
+  margin: 0 auto;
+}
+
+.title {
+  margin: 20px auto;
+  color: #f7002f;
+}
+
+.inputFormRegistration {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.labelRegistr {
+  font-weight: 800;
+  font-size: 17px;
+}
+
+.input {
+  background-color: #c2bcbc8a;
+  width: 230px;
+  font-size: 18px;
+  padding: 8px;
+}
+
+.btnRegistr {
+  background-color: #3534efcf;
+  font-size: 17px;
+  font-weight: 600;
+  color: white;
+}
+
+.message {
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.error {
+  color: #ff0101;
+}
+
+.required {
+  color: green;
+}

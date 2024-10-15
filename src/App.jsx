@@ -1,19 +1,22 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "./redux/getTasksOps.js";
+import { Users } from "./components/Users/Users.jsx";
 import LoginForm from "./components/LoginForm/LoginForm.jsx";
-import SearchBar from "./components/SearchBar/SearchBar.jsx";
-import LoginForms from "./components/LoginForms/LoginForms.jsx";
 
 const App = () => {
-  const [user, setUser] = useState([]);
-  const handleLogin = (userData) => {
-    setUser();
-  };
+  const dispatch = useDispatch();
+  const { items, isLoading, error } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
   return (
     <>
-      {/* <LoginForm onLogin={handleLogin} />
-      <SearchBar /> */}
-      <LoginForms />
+      <h1>Redux AsyncThunk Page</h1>
+      {/* <Users items={items} /> */}
+      <LoginForm />
     </>
   );
 };
